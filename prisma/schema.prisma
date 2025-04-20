@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String?     @unique @default(uuid())
+  username   String?     @unique
+  email      String?     @unique
+  password   String?
+  armyId     String?     @unique
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  todos      Todo[]      @relation("UserTodos")
+  allowances Allowance[] @relation("UserAllowances")
+  enrollments UpSkillEnrollment[] @relation("UserEnrollments")
+}
+
+model Todo {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  todoId      String?  @unique @default(uuid())
+  userId      String
+  activity    String?
+  description String?
+  status      String? @default("pending")
+  priority    String? @default("medium")
+  dueDate     String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        User    @relation("UserTodos", fields: [userId], references: [userId])
+}
+
+model Allowance {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  calculationId    String?   @unique @default(uuid())
+  userId           String
+  jobDesignation   String?
+  basicPay         Float?
+  marriedStatus    Boolean? @default(false)
+  distanceTravelled Float?
+  vehicleIncluded  Json?    // Using Json type for the nested structure
+  result           Json?    // Using Json type for the nested breakdown structure
+  calculatedAt     DateTime? @default(now())
+  user             User    @relation("UserAllowances", fields: [userId], references: [userId])
+}
+
+
+model TDClaimChecklist{
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  checklistID     String   @unique @default(uuid())
+  title           String?
+  fileUrl         String
+  createdAt        DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model TDRates{
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  tdRatesId       String   @unique @default(uuid())
+  rankCategory    String?
+  hotelAllowance  Float
+  taxiAllowance   String
+  foodAllowance   Float
+  createdAt       DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model TDRules{
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  tdRulesId       String @unique @default(uuid())
+  ruleNumber      String
+  title           String
+  description     String?
+  iconUrl         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model UpskillCertification{
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  certificationId  String @unique @default(uuid())
+  type             String?
+  course           String
+  price            Float
+  description      String
+  image            String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  tax              Float?
+  discount         Float?
+  upskillEnrollments UpSkillEnrollment[]
+}
+
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum InterestStatus {
+  PENDING
+  INTERESTED
+  NOT_INTERESTED
+}
+
+model UpSkillEnrollment{
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  applicationId   String?   @unique @default(uuid())
+  certificationId String
+  name            String
+  email           String
+  phone           String
+  verificationStatus VerificationStatus @default(PENDING)
+  interestStatus  InterestStatus @default(PENDING)
+  description     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime @updatedAt
+  certification   UpskillCertification @relation(fields: [certificationId], references: [certificationId], onDelete: Cascade)
+  user            User?                @relation("UserEnrollments", fields: [userId], references: [userId])
+  userId          String?
+}

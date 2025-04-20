@@ -1,0 +1,176 @@
+# POST https://handbook-app.onrender.com/auth/register
+# Content-Type: application/json
+
+# {
+#   "email": "soldier.vikram@commandhd.in",
+#   "password": "Field@2024",
+#   "username": "s_vikram",
+#   "armyId": "F34512"
+# }
+@baseUrl = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjBmNmYxMi1jMjM4LTRhMDEtOWE1NC0zYzBkMzdmOTU0ZDYiLCJpYXQiOjE3NDQ4Njc2MzksImV4cCI6MTc0NDk1NDAzOX0.peEhh0AivQ95P1HzhoUGVI03fzzVvaa1DCJQe6B2FKM
+@userId = 5f0f6f12-c238-4a01-9a54-3c0d37f954d6
+# GET https://handbook-app.onrender.com/users/5f0f6f12-c238-4a01-9a54-3c0d37f954d6
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZjBmNmYxMi1jMjM4LTRhMDEtOWE1NC0zYzBkMzdmOTU0ZDYiLCJpYXQiOjE3NDQ4MDY0MTQsImV4cCI6MTc0NDg5MjgxNH0.e0R5hhQ8J3MF3bBvwS7e6sctl7C1BK7p6h9gplfkh10
+
+# POST http://localhost:5000/auth/login
+# Content-Type: application/json
+
+# { 
+#   "email": "john.doe34@example.com",
+#   "password": "johnSecurePass@789"
+# }
+
+# ### 1. Create a new certification course (admin)
+# POST {{baseUrl}}/upskill/courses
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
+
+# {
+#   "type": "Technical",
+#   "course": "Advanced Network Security",
+#   "price": 299.99,
+#   "description": "A comprehensive course on securing networks against modern threats",
+#   "image": "network-security.jpg",
+#   "tax": 29.99,
+#   "discount": 50.00
+# }
+
+# ## 2. Get all courses (public)
+# GET {{baseUrl}}/upskill/courses
+# Content-Type: application/json
+
+# ## 3. Get course by ID (public)
+# # Replace course-id with actual ID from the previous response
+# GET {{baseUrl}}/upskill/courses/2c7b28c8-aae6-48e0-8571-1894f396364b
+# Content-Type: application/json
+
+### 4. Update course (admin)
+# PUT {{baseUrl}}/upskill/courses/2c7b28c8-aae6-48e0-8571-1894f396364b
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
+
+# {
+#   "price": 249.99,
+#   "description": "Updated: A comprehensive course on securing networks against modern threats",
+#   "discount": 75.00
+# }
+
+# # ## 5. Create enrollment for a user (authenticated)
+# POST {{baseUrl}}/upskill/enrollments
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
+
+{
+  "certificationId": "2c7b28c8-aae6-48e0-8571-1894f396364b",
+  "userId": "{{userId}}",
+  "name": "Johnny D",
+  "email": "johnny_d@example.com",
+  "phone": "123-456-7890",
+  "description": "I want to improve my skills in network security"
+}
+
+### 6. Get enrollment by ID (authenticated)
+# Replace enrollment-id with actual ID from the previous response
+# GET {{baseUrl}}/upskill/enrollments/ef68dd58-d3aa-48f6-ad91-0c5c5851802a
+# Authorization: Bearer {{token}}
+
+# ### 8. Get all enrollments for a specific user (authenticated)
+# GET http://localhost:5000/upskill/enrollments/users/{{userId}}
+# Authorization: Bearer {{token}}
+
+# GET http://localhost:5000/users/1d406afc-6d68-412f-b775-5237bb5854ed
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxZDQwNmFmYy02ZDY4LTQxMmYtYjc3NS01MjM3YmI1ODU0ZWQiLCJpYXQiOjE3NDQ2OTI5NTYsImV4cCI6MTc0NDY5MzA0Mn0.OdxeOoFKhMBAyn4RWO-WQC67ITNFOhAi4kJVmMj2x0w
+# PUT https://handbook-app.onrender.com/users/b6ed6edf-ac69-43ac-a488-713db73e373d
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# {
+#   "username": "dr_priya_updated",
+#   "email": "updated.priya@commandhd.in",
+#   "phone": "+919876543210"
+# }
+
+
+# PUT https://handbook-app.onrender.com/users/b6ed6edf-ac69-43ac-a488-713db73e373d/password
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# {
+#   "currentPassword": "Medic@456",
+#   "newPassword": "NewSecure@789"
+# }
+
+
+# POST https://handbook-app.onrender.com/todos
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# {
+#   "title": "Complete patient reports",
+#   "description": "Finish all pending patient case files for December",
+#   "dueDate": "2023-12-15",
+#   "priority": "high",
+#   "category": "medical"
+# }
+
+
+# GET https://handbook-app.onrender.com/todos/suljlu2uh32yin4d9peke
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# GET http://localhost:5000/todos/68fc713a-1902-46a3-b623-7fc568335f93
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ZjBhOGU1MS0zY2RiLTRmZDUtOWZmNC01MmEzYTlhNDcwZDAiLCJpYXQiOjE3NDQ3MDY1NTEsImV4cCI6MTc0NDc5Mjk1MX0.3TpF_jDPpeK37XaFtA1p4poqM7N-IqIG6s--ZTOF9yA
+
+# PUT https://handbook-app.onrender.com/todos/suljlu2uh32yin4d9peke
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# {
+#   "description": "Finish ALL December patient reports (urgent!)",
+#   "priority": "urgent",
+#   "dueDate": "2023-12-10"
+# }
+
+# PUT https://handbook-app.onrender.com/todos/suljlu2uh32yin4d9peke/status
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# {
+#   "status": "in-progress"
+# }
+
+# GET https://handbook-app.onrender.com/todos
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# DELETE http://localhost:5000/todos/68fc713a-1902-46a3-b623-7fc568335f93
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ZjBhOGU1MS0zY2RiLTRmZDUtOWZmNC01MmEzYTlhNDcwZDAiLCJpYXQiOjE3NDQ3MDY1NTEsImV4cCI6MTc0NDc5Mjk1MX0.3TpF_jDPpeK37XaFtA1p4poqM7N-IqIG6s--ZTOF9yA
+
+
+POST https://handbook-app.onrender.com/allowances/calculate
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "jobDesignation": "Captain",
+  "basicPay": 50000,
+  "marriedStatus": true,
+  "distanceTravelled": 300,
+  "vehicleIncluded": {
+    "type": "car",
+    "details": "Honda Civic",
+    "weight": 1200
+  }
+}
+
+
+# GET https://handbook-app.onrender.com/allowances/history?page=1&limit=5
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# GET https://handbook-app.onrender.com/allowances/calculations/x5k9j2m8n7p1q3
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
+
+# GET http://localhost:5000/allowance/history?limit=10&offset=0
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ZjBhOGU1MS0zY2RiLTRmZDUtOWZmNC01MmEzYTlhNDcwZDAiLCJpYXQiOjE3NDQ3MTY1NTQsImV4cCI6MTc0NDgwMjk1NH0.tToFJ2zps6L8DBVmRUZv2hJda2GXwsyMQQJtTSt_nrk
+
+# GET http://localhost:5000/allowance/calculations/27496aab-d2a5-47d7-a599-b98734e2668e
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ZjBhOGU1MS0zY2RiLTRmZDUtOWZmNC01MmEzYTlhNDcwZDAiLCJpYXQiOjE3NDQ3MTY1NTQsImV4cCI6MTc0NDgwMjk1NH0.tToFJ2zps6L8DBVmRUZv2hJda2GXwsyMQQJtTSt_nrk
