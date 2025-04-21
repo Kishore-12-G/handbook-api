@@ -1,7 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
 const { v4: uuidv4 } = require('uuid');
-const prisma = new PrismaClient();
 const ragService = require('../services/ragService');
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const chatbotController = {
   async processQuery(req, res) {
@@ -16,6 +16,10 @@ const chatbotController = {
 
     try {
       const response = await ragService.askQuestion(query, resetMemory);
+      if (!prisma.chatbot) {
+        console.error('prisma.chatbot is undefined. Prisma client may not be properly initialized.');
+        return res.status(500).json({ success: false, message: 'Database configuration error' });
+      }
       const conversation = await prisma.chatbot.create({
         data: {
           query,

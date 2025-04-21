@@ -106,13 +106,13 @@
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVkNmVkZi1hYzY5LTQzYWMtYTQ4OC03MTNkYjczZTM3M2QiLCJpYXQiOjE3NDQ3OTgwMDAsImV4cCI6MTc0NDg4NDQwMH0.tpvd_EuMN2BmNNzwZaY-MPImiGajm8_eedG8BHvTM_o
 
-# {
-#   "title": "Complete patient reports",
-#   "description": "Finish all pending patient case files for December",
-#   "dueDate": "2023-12-15",
-#   "priority": "high",
-#   "category": "medical"
-# }
+{
+  "title": "Complete patient reports",
+  "description": "Finish all pending patient case files for December",
+  "dueDate": "2023-12-15",
+  "priority": "high",
+  "category": "medical"
+}
 
 
 # GET https://handbook-app.onrender.com/todos/suljlu2uh32yin4d9peke
