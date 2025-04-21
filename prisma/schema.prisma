@@ -3,25 +3,37 @@ generator client {
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
-
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String?     @unique @default(uuid())
-  username   String?     @unique
-  email      String?     @unique
-  password   String?
-  armyId     String?     @unique
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  todos      Todo[]      @relation("UserTodos")
-  allowances Allowance[] @relation("UserAllowances")
-  enrollments UpSkillEnrollment[] @relation("UserEnrollments")
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String?      @unique @default(uuid())
+  username     String?      @unique
+  email        String?      @unique
+  password     String?
+  armyId       String?      @unique
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  todos        Todo[]       @relation("UserTodos")
+  allowances   Allowance[]  @relation("UserAllowances")
+  enrollments  UpSkillEnrollment[] @relation("UserEnrollments")
+  chatbots     Chatbot[]    @relation("UserChatbots")
+}
+
+model Chatbot {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String
+  sessionId  String
+  query      String
+  response   String
+  createdAt  DateTime  @default(now())
+  user       User?     @relation("UserChatbots", fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([userId])
 }
 
 model Todo {
@@ -52,7 +64,6 @@ model Allowance {
   user             User    @relation("UserAllowances", fields: [userId], references: [userId])
 }
 
-
 model TDClaimChecklist{
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   checklistID     String   @unique @default(uuid())
@@ -67,7 +78,7 @@ model TDRates{
   tdRatesId       String   @unique @default(uuid())
   rankCategory    String?
   hotelAllowance  Float
-  taxiAllowance   String
+  taxiAllowance   Float    // Changed from String to Float for consistency
   foodAllowance   Float
   createdAt       DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -98,7 +109,6 @@ model UpskillCertification{
   discount         Float?
   upskillEnrollments UpSkillEnrollment[]
 }
-
 
 enum VerificationStatus {
   PENDING
