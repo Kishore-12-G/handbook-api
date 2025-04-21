@@ -27,7 +27,7 @@ app.use('/api/tdRates', require('./routes/tdRatesRoutes'));
 app.use('/api/td-rules', require('./routes/tdRulesRoutes'));
 app.use('/api/conversations', require('./routes/chatbotRoutes'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

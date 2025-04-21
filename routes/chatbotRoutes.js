@@ -1,14 +1,14 @@
 const express = require('express');
-const { processQuery, getConversationHistory } = require('../controllers/chatbotController');
+const chatbot = require('../controllers/chatbotController');
 // Uncomment if you're using auth middleware
-// const { protect } = require('../middleware/auth');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
 // Route to process queries
-router.post('/', /*protect,*/ processQuery);
+router.post('/', protect,chatbot.processQuery);
 
 // Route to get conversation history
-router.get('/:sessionId/:userId?', /*protect,*/ getConversationHistory);
+router.get('/:sessionId/:userId?', /*protect,*/ chatbot.getConversationById);
 
 module.exports = router;
