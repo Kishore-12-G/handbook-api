@@ -6,34 +6,34 @@ const prisma = new PrismaClient();
 const chatbotController = {
   async processQuery(req, res) {
     const { query, sessionId, resetMemory } = req.body;
-    const userId = req.params.userId; // or req.body.userId depending on route structure
-
+    
+    // Get userId from the authenticated user object that's attached by your protect middleware
+    const userId = req.user.userId;  // This should be set by your auth middleware
+  
     if (!query) {
       return res.status(400).json({ success: false, message: 'query is required' });
     }
-
+  
     const currentSessionId = sessionId || uuidv4();
-
+  
     try {
       const response = await ragService.askQuestion(query, resetMemory);
-      if (!prisma.chatbot) {
-        console.error('prisma.chatbot is undefined. Prisma client may not be properly initialized.');
-        return res.status(500).json({ success: false, message: 'Database configuration error' });
-      }
+      
       const conversation = await prisma.chatbot.create({
         data: {
           query,
           response,
           sessionId: currentSessionId,
-          userId: userId || null,
+          userId: userId,  // This is now the authenticated user's ID
         },
       });
-
+  
       res.status(201).json({
         success: true,
         data: {
           id: conversation.id,
           sessionId: conversation.sessionId,
+          userId: userId,
           query,
           response,
           timestamp: conversation.createdAt,
